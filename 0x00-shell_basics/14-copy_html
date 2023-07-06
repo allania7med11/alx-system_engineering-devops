@@ -1,12 +1,2 @@
 #!/bin/bash
-current_dir=$(pwd)
-parent_dir=$(dirname "$current_dir")
-for file in "$current_dir"/*.html; do
-    filename=$(basename "$file")
-    destination="$parent_dir/$filename"
-
-    if [[ ! -e "$destination" || "$file" -nt "$destination" ]]; then
-        cp "$file" "$destination"
-        echo "Copied $file to $destination"
-    fi
-done
+find "$(pwd)" -maxdepth 1 -name '*.html' -newer "$(dirname "$(pwd)")" -exec cp -u '{}' "$(dirname "$(pwd)")" \;
